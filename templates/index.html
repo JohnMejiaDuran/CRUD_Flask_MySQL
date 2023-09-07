@@ -1,22 +1,32 @@
-<form action="/new" method="POST">
+{% extends 'layout.html' %}
 
-    <input type="text" name="fullname" placeholder="Write your fullname">
-    <input type="text" name="email" placeholder="Write your Email">
-    <input type="text" name="phone" placeholder="Write your phone">
+{% block content %}
+<div class="row">
+    
+    <div class="col-md-5">
+        {% include('partials/_messages.html') %}
 
-    <button>Save</button>
-</form>
+        {% include('partials/_contactform.html') %}
+    </div> 
 
-<div>
-    {% for contact in contacts %}
-    <div>
-        <h5>{{contact.fullname}}</h5>
-        <div>
-            <a href="{{ url_for('contacts.update_contact')}}">Update</a>
-            <a href="{{ url_for('contacts.delete_contact', id=contact.id)}}">Delete</a>
-        </div>
-        <p>{{contact.email}}</p>
-        <p>{{contact.phone}}</p>
+    <div class="col-md-7">
+            {% for contact in contacts %}
+            <div class="card mb-1 text-white bg-dark">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <h5>{{contact.fullname}}</h5>
+                        <div>
+                            <a href="{{ url_for('contacts.update_contact', id=contact.id)}}" class="btn bg-black text-white btn-sm rounded-0">Update</a>
+                            <a href="{{ url_for('contacts.delete_contact', id=contact.id)}}"  class="btn btn-danger btn-sm rounded-0">Delete</a>
+                        </div>
+                    </div>
+                    <p>{{contact.email}}</p>
+                    <p>{{contact.phone}}</p>
+                </div>
+            </div>
+            {% endfor %}
     </div>
-    {% endfor %}
 </div>
+
+
+{% endblock %}
